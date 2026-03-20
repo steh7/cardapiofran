@@ -493,7 +493,7 @@
     };
     function fb(t){ var a=document.createElement('textarea'); a.value=t; a.style.cssText='position:fixed;opacity:0'; document.body.appendChild(a); a.focus(); a.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(a); }
 
-    // SEND
+   // SEND
     window.sendOrder = function() {
       clearErr();
       var name=document.getElementById('nameInput').value.trim();
@@ -504,11 +504,22 @@
       if (!date){ showErr('Informe a data de retirada.'); return; }
       var tot=cart.reduce(function(s,i){return s+i.price;},0);
       var dp=date.split('-'), pk=dp[2]+'/'+dp[1]+'/'+dp[0];
-      var its=cart.map(function(i){return '  * Bolo de '+i.flavor+' ('+i.type+') - R$ '+i.price+',00';}).join('\n');
-      var pn=sPayment==='PIX'?'\n\nPagamento via PIX - o comprovante sera enviado em seguida!':'';
-      var msg='Ola, Fran!\n\nNome: '+name+'\n\nItens:\n'+its+'\n\nTotal: R$ '+tot+',00\nPagamento: '+sPayment+'\nRetirada: '+pk+pn+'\n\nAguardo confirmacao!';
+      var its=cart.map(function(i){return '• *Bolo de '+i.flavor+'* ('+i.type+') - R$ '+i.price+',00';}).join('\n');
+      var pn=sPayment==='PIX'?'\n\n📲 *PIX pago!* O comprovante será enviado em seguida.':'';
+      var msg='🎂✨ *NOVO PEDIDO — Bolos Caseiros da Fran* ✨🎂\n'
+        +'\nOlá, Fran! Vim pelo site fazer meu pedido 🥰\n'
+        +'\n━━━━━━━━━━━━━━━━━━━━\n'
+        +'👤 *Nome:* '+name+'\n'
+        +'📅 *Retirada:* '+pk+'\n'
+        +'💳 *Meio de Pagamento:* '+sPayment+'\n'
+        +'━━━━━━━━━━━━━━━━━━━━\n'
+        +'📌 *Itens do Pedido:*\n'
+        +its+'\n'
+        +'━━━━━━━━━━━━━━━━━━━━\n'
+        +'💰 *Valor Total:* R$ '+tot+',00'+pn;
       window.open('https://wa.me/5511932578086?text='+encodeURIComponent(msg),'_blank');
     };
+ 
 
     function showErr(m){ var e=document.getElementById('errorMsg'); e.textContent=m; e.classList.add('show'); e.scrollIntoView({behavior:'smooth',block:'center'}); }
     function clearErr(){ document.getElementById('errorMsg').classList.remove('show'); }
