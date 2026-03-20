@@ -1,1014 +1,520 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#D4756B">
-  <meta name="description" content="Encomende bolos caseiros deliciosos direto no WhatsApp da Fran">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Bolos da Fran">
-  <link rel="manifest" href="./manifest.json">
-  <link rel="apple-touch-icon" href="./icon-192.png">
   <title>Bolos Caseiros da Fran</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     :root {
-      --bg: #FDF4F0;
-      --bg2: #FBF0EC;
-      --surface: #FFFFFF;
-      --surface2: #FFF7F5;
-      --rose: #D4756B;
-      --rose-light: #F2A99A;
-      --rose-pale: #FDDDD8;
-      --peach: #F9C6BA;
-      --blush: #FBEAE6;
-      --sage: #8BAF8E;
-      --sage-light: #C8DEC9;
-      --sage-pale: #E8F3E9;
-      --lavender: #B8A8D4;
-      --lav-pale: #EDE8F7;
-      --gold: #C9965A;
-      --gold-pale: #FAF0E4;
-      --text: #5C3D36;
-      --text2: #9B7068;
-      --text3: #C4A098;
-      --border: #F0D8D2;
-      --white: #FFFFFF;
-      --shadow: rgba(212, 117, 107, 0.10);
-    }
-
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--bg);
-      font-family: 'Nunito', sans-serif;
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* ── STATUS BANNER ── */
-    .status-banner {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 10px 20px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: all 0.3s ease;
-    }
-
-    .status-banner.open {
-      background: rgba(139, 175, 142, 0.92);
-      color: #2D5E31;
-      border-bottom: 1px solid rgba(139, 175, 142, 0.4);
-    }
-
-    .status-banner.closed {
-      background: rgba(212, 117, 107, 0.90);
-      color: #fff;
-      border-bottom: 1px solid rgba(212, 117, 107, 0.4);
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-
-    .status-banner.open .status-dot {
-      background: #2D5E31;
-    }
-
-    .status-banner.closed .status-dot {
-      background: #fff;
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      50% {
-        opacity: 0.6;
-        transform: scale(1.3);
-      }
-    }
-
-    /* ── HERO ── */
-    .hero {
-      text-align: center;
-      padding: 52px 24px 44px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -60px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 500px;
-      height: 320px;
-      background: radial-gradient(ellipse, rgba(242, 169, 154, 0.3) 0%, transparent 65%);
-      pointer-events: none;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--blush);
-      border: 1px solid var(--peach);
-      color: var(--rose);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      padding: 6px 16px;
-      border-radius: 100px;
-      margin-bottom: 22px;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 0.05s forwards;
-    }
-
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.4rem, 8vw, 4rem);
-      color: var(--text);
-      line-height: 1.1;
-      letter-spacing: -0.3px;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 0.15s forwards;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--rose);
-    }
-
-    .hero-sub {
-      margin-top: 14px;
-      color: var(--text2);
-      font-size: 0.95rem;
-      font-weight: 400;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 0.25s forwards;
-    }
-
-    /* ── NOTICE (24h) ── */
-    .notice-24h {
-      max-width: 620px;
-      margin: 0 auto 8px;
-      padding: 0 20px;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 0.35s forwards;
-    }
-
-    .notice-24h-inner {
-      background: var(--gold-pale);
-      border: 1.5px solid #EDD5BB;
-      border-radius: 16px;
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.85rem;
-      color: #7A5230;
-      font-weight: 600;
-      line-height: 1.4;
-    }
-
-    .notice-24h-inner .icon {
-      font-size: 1.4rem;
-      flex-shrink: 0;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* ── CONTAINER ── */
-    .container {
-      max-width: 620px;
-      margin: 0 auto;
-      padding: 8px 20px 60px;
-    }
-
-    /* ── STEP CARD ── */
-    .step-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 24px;
-      padding: 26px 22px;
-      margin-bottom: 14px;
-      box-shadow: 0 4px 20px var(--shadow);
-      opacity: 0;
-      transform: translateY(22px);
-      animation: fadeUp 0.65s ease forwards;
-    }
-
-    .step-card:nth-child(1) {
-      animation-delay: 0.4s;
-    }
-
-    .step-card:nth-child(2) {
-      animation-delay: 0.5s;
-    }
-
-    .step-card:nth-child(3) {
-      animation-delay: 0.6s;
-    }
-
-    .step-card:nth-child(4) {
-      animation-delay: 0.7s;
-    }
-
-    .step-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-
-    .step-badge {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--rose-light), var(--rose));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 800;
-      color: #fff;
-      flex-shrink: 0;
-      box-shadow: 0 4px 10px rgba(212, 117, 107, 0.3);
-    }
-
-    .step-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .step-hint {
-      font-size: 0.77rem;
-      color: var(--text3);
-      margin-top: 2px;
-    }
-
-    /* ── NAME INPUT ── */
-    .name-wrap {
-      position: relative;
-    }
-
-    .name-wrap .icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1rem;
-      pointer-events: none;
-    }
-
-    .name-input {
-      width: 100%;
-      background: var(--blush);
-      border: 1.5px solid var(--peach);
-      border-radius: 14px;
-      padding: 15px 16px 15px 44px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.97rem;
-      font-weight: 600;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-    }
-
-    .name-input::placeholder {
-      color: var(--text3);
-      font-weight: 400;
-    }
-
-    .name-input:focus {
-      background: var(--white);
-      border-color: var(--rose-light);
-      box-shadow: 0 0 0 3px rgba(212, 117, 107, 0.12);
-    }
-
-    /* ── FLAVOR GRID ── */
-    .flavor-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
-      gap: 10px;
-    }
-
-    .flavor-card {
-      background: var(--surface2);
-      border: 1.5px solid var(--border);
-      border-radius: 18px;
-      padding: 18px 10px 14px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.34, 1.2, 0.64, 1);
-      user-select: none;
-      position: relative;
-    }
-
-    .flavor-card:hover {
-      border-color: var(--rose-light);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px var(--shadow);
-    }
-
-    .flavor-card.selected {
-      border-color: var(--rose);
-      background: var(--rose-pale);
-      box-shadow: 0 0 0 3px rgba(212, 117, 107, 0.15), 0 6px 16px var(--shadow);
-      transform: translateY(-2px);
-    }
-
-    .flavor-icon {
-      font-size: 2rem;
-      display: block;
-      margin-bottom: 8px;
-      line-height: 1;
-    }
-
-    .flavor-name {
-      font-size: 0.71rem;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--text2);
-      transition: color 0.2s;
-    }
-
-    .flavor-card.selected .flavor-name {
-      color: var(--rose);
-    }
-
-    .flavor-card .check {
-      position: absolute;
-      top: 7px;
-      right: 7px;
-      width: 18px;
-      height: 18px;
-      background: var(--rose);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      color: #fff;
-      opacity: 0;
-      transform: scale(0);
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .flavor-card.selected .check {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    /* ── TYPE GRID ── */
-    .type-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .type-card {
-      background: var(--surface2);
-      border: 1.5px solid var(--border);
-      border-radius: 20px;
-      padding: 22px 16px;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.34, 1.2, 0.64, 1);
-      user-select: none;
-      position: relative;
-    }
-
-    .type-card:hover {
-      border-color: var(--rose-light);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px var(--shadow);
-    }
-
-    .type-card.selected {
-      border-color: var(--rose);
-      background: var(--rose-pale);
-      box-shadow: 0 0 0 3px rgba(212, 117, 107, 0.15), 0 6px 16px var(--shadow);
-      transform: translateY(-2px);
-    }
-
-    .type-icon {
-      font-size: 2.2rem;
-      display: block;
-      margin-bottom: 10px;
-    }
-
-    .type-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 5px;
-    }
-
-    .type-desc {
-      font-size: 0.77rem;
-      color: var(--text2);
-      line-height: 1.4;
-      font-weight: 400;
-    }
-
-    .type-price {
-      margin-top: 12px;
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--rose);
-    }
-
-    .type-card .check {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 20px;
-      height: 20px;
-      background: var(--rose);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #fff;
-      opacity: 0;
-      transform: scale(0);
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .type-card.selected .check {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    /* ── SUMMARY ── */
-    .summary-box {
-      background: var(--blush);
-      border: 1.5px solid var(--peach);
-      border-radius: 18px;
-      padding: 20px 20px 16px;
-      margin-bottom: 14px;
-    }
-
-    .summary-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.95rem;
-      font-style: italic;
-      color: var(--rose);
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--peach);
-    }
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 0;
-    }
-
-    .summary-row .label {
-      font-size: 0.76rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--text3);
-    }
-
-    .summary-row .value {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .summary-total {
-      border-top: 1px solid var(--peach);
-      margin-top: 10px;
-      padding-top: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .summary-total .label {
-      font-size: 0.82rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text);
-    }
-
-    .summary-total .value {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--rose);
-    }
-
-    /* ── CLOSED NOTE ── */
-    .closed-note {
-      background: var(--rose-pale);
-      border: 1px solid var(--peach);
-      border-radius: 12px;
-      padding: 12px 16px;
-      font-size: 0.82rem;
-      color: var(--rose);
-      font-weight: 600;
-      margin-bottom: 12px;
-      display: none;
-      line-height: 1.5;
-      text-align: center;
-    }
-
-    .closed-note.show {
-      display: block;
-    }
-
-    /* ── BUTTON ── */
-    .btn-whatsapp {
-      width: 100%;
-      background: linear-gradient(135deg, #25D366, #1cb550);
-      color: #fff;
-      border: none;
-      border-radius: 16px;
-      padding: 18px 24px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: 0.3px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      transition: all 0.22s ease;
-      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.25);
-    }
-
-    .btn-whatsapp:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(37, 211, 102, 0.35);
-    }
-
-    .btn-whatsapp:active {
-      transform: translateY(0);
-    }
-
-    .btn-whatsapp svg {
-      width: 22px;
-      height: 22px;
-      fill: #fff;
-      flex-shrink: 0;
-    }
-
-    /* ── ERROR ── */
-    .error-msg {
-      background: var(--rose-pale);
-      border: 1px solid var(--rose-light);
-      color: var(--rose);
-      border-radius: 12px;
-      padding: 12px 16px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 12px;
-      display: none;
-      line-height: 1.5;
-    }
-
-    .error-msg.show {
-      display: block;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      text-align: center;
-      padding: 36px 20px 44px;
-      border-top: 1px solid var(--border);
-      margin-top: 8px;
-    }
-
-    .footer-dev {
-      font-size: 0.7rem;
-      color: #000000;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .footer-name {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-style: italic;
-      font-weight: 500;
-      color: #000000;
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-
-    .footer-name:hover {
-      opacity: 0.75;
-    }
-
-    .footer-ig {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 10px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #000000;
-      text-decoration: none;
-      transition: color 0.2s;
-      letter-spacing: 0.3px;
-    }
-
-    .footer-ig:hover {
-      color: var(--rose);
-    }
-
-    .footer-rights {
-      margin-top: 18px;
-      font-size: 0.7rem;
-      color: #000000;
-      letter-spacing: 0.5px;
-    }
-
-    @media (max-width: 400px) {
-      .flavor-grid {
-        grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
-      }
-
-      .type-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+      --bg:#FDF4F0;--surface:#FFFFFF;--surface2:#FFF7F5;
+      --rose:#D4756B;--rose-light:#F2A99A;--rose-pale:#FDDDD8;
+      --peach:#F9C6BA;--blush:#FBEAE6;
+      --sage:#8BAF8E;--sage-light:#C8DEC9;--sage-pale:#E8F3E9;
+      --gold-pale:#FAF0E4;
+      --text:#5C3D36;--text2:#9B7068;--text3:#C4A098;
+      --border:#F0D8D2;--shadow:rgba(212,117,107,0.10);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);font-family:'Nunito',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+    .status-banner{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;font-size:.82rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;backdrop-filter:blur(12px);transition:all .3s}
+    .status-banner.open{background:rgba(139,175,142,.92);color:#2D5E31;border-bottom:1px solid rgba(139,175,142,.4)}
+    .status-banner.closed{background:rgba(212,117,107,.90);color:#fff;border-bottom:1px solid rgba(212,117,107,.4)}
+    .status-dot{width:8px;height:8px;border-radius:50%;animation:pulse 2s ease-in-out infinite;flex-shrink:0;background:currentColor}
+
+    .hero{text-align:center;padding:52px 24px 36px;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:500px;height:320px;background:radial-gradient(ellipse,rgba(242,169,154,.3) 0%,transparent 65%);pointer-events:none}
+    .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--blush);border:1px solid var(--peach);color:var(--rose);font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:22px;opacity:0;animation:fadeUp .7s ease .05s forwards}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,8vw,4rem);color:var(--text);line-height:1.1;opacity:0;animation:fadeUp .7s ease .15s forwards}
+    .hero h1 em{font-style:italic;color:var(--rose)}
+    .hero-sub{margin-top:14px;color:var(--text2);font-size:.95rem;opacity:0;animation:fadeUp .7s ease .25s forwards}
+
+    .notice-24h{max-width:620px;margin:0 auto 8px;padding:0 20px;opacity:0;animation:fadeUp .7s ease .35s forwards}
+    .notice-24h-inner{background:var(--gold-pale);border:1.5px solid #EDD5BB;border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:12px;font-size:.85rem;color:#7A5230;font-weight:600;line-height:1.4}
+
+    .container{max-width:620px;margin:0 auto;padding:8px 20px 60px}
+    .step-card{background:var(--surface);border:1.5px solid var(--border);border-radius:24px;padding:26px 22px;margin-bottom:14px;box-shadow:0 4px 20px var(--shadow);opacity:0;transform:translateY(22px);animation:fadeUp .65s ease forwards}
+    .step-card:nth-child(1){animation-delay:.4s}.step-card:nth-child(2){animation-delay:.5s}
+    .step-card:nth-child(3){animation-delay:.6s}.step-card:nth-child(4){animation-delay:.7s}
+    .step-card:nth-child(5){animation-delay:.8s}.step-card:nth-child(6){animation-delay:.9s}
+    .step-header{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+    .step-badge{width:34px;height:34px;border-radius:12px;background:linear-gradient(135deg,var(--rose-light),var(--rose));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;box-shadow:0 4px 10px rgba(212,117,107,.3)}
+    .step-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--text)}
+    .step-hint{font-size:.77rem;color:var(--text3);margin-top:2px}
+    .section-label{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:10px;display:block}
+    .divider{height:1px;background:var(--border);margin:16px 0}
+
+    .name-wrap{position:relative}
+    .name-wrap .icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none}
+    .name-input,.field-input{width:100%;background:var(--blush);border:1.5px solid var(--peach);border-radius:14px;padding:15px 16px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:600;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s,background .2s;-webkit-appearance:none}
+    .name-input{padding-left:44px}
+    .name-input::placeholder,.field-input::placeholder{color:var(--text3);font-weight:400}
+    .name-input:focus,.field-input:focus{background:#fff;border-color:var(--rose-light);box-shadow:0 0 0 3px rgba(212,117,107,.12)}
+
+    .flavor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+    .flavor-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:18px;padding:18px 10px 14px;text-align:center;cursor:pointer;transition:all .2s cubic-bezier(.34,1.2,.64,1);user-select:none;position:relative}
+    .flavor-card:hover{border-color:var(--rose-light);transform:translateY(-2px);box-shadow:0 6px 16px var(--shadow)}
+    .flavor-card.selected{border-color:var(--rose);background:var(--rose-pale);box-shadow:0 0 0 3px rgba(212,117,107,.15),0 6px 16px var(--shadow);transform:translateY(-2px)}
+    .flavor-icon{font-size:2rem;display:block;margin-bottom:8px;line-height:1}
+    .flavor-name{font-size:.71rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2)}
+    .flavor-card.selected .flavor-name{color:var(--rose)}
+    .check{position:absolute;top:7px;right:7px;width:18px;height:18px;background:var(--rose);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;opacity:0;transform:scale(0);transition:all .2s cubic-bezier(.34,1.56,.64,1)}
+    .selected .check{opacity:1;transform:scale(1)}
+
+    .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .type-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:22px 16px 18px;cursor:pointer;transition:all .2s cubic-bezier(.34,1.2,.64,1);user-select:none;position:relative;display:flex;flex-direction:column}
+    .type-card:hover{border-color:var(--rose-light);transform:translateY(-2px);box-shadow:0 6px 16px var(--shadow)}
+    .type-card.selected{border-color:var(--rose);background:var(--rose-pale);box-shadow:0 0 0 3px rgba(212,117,107,.15),0 6px 16px var(--shadow);transform:translateY(-2px)}
+    .type-card .check{top:12px;right:12px;width:20px;height:20px;font-size:11px}
+    .type-icon{font-size:2.2rem;display:block;margin-bottom:10px}
+    .type-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:5px}
+    .type-desc{font-size:.77rem;color:var(--text2);line-height:1.4;flex:1}
+    .type-price{margin-top:14px;font-size:1.05rem;font-weight:800;color:var(--rose)}
+
+    .btn-add{width:100%;margin-top:16px;background:linear-gradient(135deg,var(--rose-light),var(--rose));color:#fff;border:none;border-radius:14px;padding:15px 20px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;box-shadow:0 4px 16px rgba(212,117,107,.3)}
+    .btn-add:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,117,107,.4)}
+
+    .cart-empty{text-align:center;padding:28px 16px;color:var(--text3);font-size:.9rem}
+    .cart-empty-icon{font-size:2.5rem;display:block;margin-bottom:10px}
+    .cart-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+    .cart-item-emoji{font-size:1.6rem;flex-shrink:0}
+    .cart-item-info{flex:1;min-width:0}
+    .cart-item-name{font-weight:700;font-size:.9rem;color:var(--text)}
+    .cart-item-sub{font-size:.76rem;color:var(--text3);margin-top:2px}
+    .cart-item-price{font-weight:800;color:var(--rose);white-space:nowrap}
+    .cart-item-remove{background:none;border:none;cursor:pointer;color:var(--text3);font-size:1.1rem;padding:4px;border-radius:8px;transition:color .2s;flex-shrink:0}
+    .cart-item-remove:hover{color:var(--rose)}
+    .cart-total-row{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1.5px solid var(--peach);margin-top:4px}
+    .cart-total-label{font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text)}
+    .cart-total-value{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--rose)}
+
+    .schedule-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .field-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:7px;display:block}
+
+    .payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .payment-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:16px;padding:16px 14px;text-align:center;cursor:pointer;transition:all .2s cubic-bezier(.34,1.2,.64,1);user-select:none;position:relative}
+    .payment-card:hover{border-color:var(--rose-light);transform:translateY(-2px)}
+    .payment-card.selected{border-color:var(--rose);background:var(--rose-pale);box-shadow:0 0 0 3px rgba(212,117,107,.15)}
+    .payment-icon{font-size:1.8rem;display:block;margin-bottom:6px}
+    .payment-name{font-size:.8rem;font-weight:700;color:var(--text2)}
+    .payment-card.selected .payment-name{color:var(--rose)}
+
+    .pix-box{display:none;margin-top:16px;background:var(--sage-pale);border:1.5px solid var(--sage-light);border-radius:18px;padding:22px;text-align:center}
+    .pix-box.show{display:block}
+    .pix-box h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:#2D5E31;margin-bottom:6px}
+    .pix-box p{font-size:.82rem;color:#4A7C4E;margin-bottom:16px}
+    #qrcode-container{display:flex;justify-content:center;margin:12px 0}
+    #qrcode-container canvas,#qrcode-container img{border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.1)}
+    .pix-key-box{background:#fff;border:1px solid var(--sage-light);border-radius:12px;padding:12px 16px;margin:12px 0;font-size:.85rem;font-weight:700;color:#2D5E31;word-break:break-all}
+    .pix-key-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8BAF8E;margin-bottom:4px}
+    .pix-amount{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#2D5E31;margin:8px 0}
+    .btn-copy-pix{background:var(--sage);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px}
+    .btn-copy-pix:hover{background:#6D9970}
+    .btn-copy-pix.copied{background:#4A7C4E}
+
+    .summary-box{background:var(--blush);border:1.5px solid var(--peach);border-radius:18px;padding:20px;margin-bottom:14px}
+    .summary-title{font-family:'Playfair Display',serif;font-size:.95rem;font-style:italic;color:var(--rose);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--peach)}
+    .summary-item-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:.85rem}
+    .s-name{color:var(--text);font-weight:600;flex:1}
+    .s-price{color:var(--rose);font-weight:700;white-space:nowrap;margin-left:8px}
+    .summary-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0}
+    .summary-row .label{font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3)}
+    .summary-row .value{font-size:.88rem;font-weight:700;color:var(--text)}
+    .summary-total{border-top:1px solid var(--peach);margin-top:10px;padding-top:12px;display:flex;justify-content:space-between;align-items:center}
+    .summary-total .label{font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text)}
+    .summary-total .value{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--rose)}
+
+    .closed-note{background:var(--rose-pale);border:1px solid var(--peach);border-radius:12px;padding:12px 16px;font-size:.82rem;color:var(--rose);font-weight:600;margin-bottom:12px;display:none;line-height:1.5;text-align:center}
+    .closed-note.show{display:block}
+    .error-msg{background:var(--rose-pale);border:1px solid var(--rose-light);color:var(--rose);border-radius:12px;padding:12px 16px;font-size:.85rem;font-weight:600;margin-bottom:12px;display:none;line-height:1.5}
+    .error-msg.show{display:block}
+
+    .btn-whatsapp{width:100%;background:linear-gradient(135deg,#25D366,#1cb550);color:#fff;border:none;border-radius:16px;padding:18px 24px;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;transition:all .22s;box-shadow:0 4px 20px rgba(37,211,102,.25)}
+    .btn-whatsapp:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,.35)}
+    .btn-whatsapp svg{width:22px;height:22px;fill:#fff;flex-shrink:0}
+
+    footer{text-align:center;padding:36px 20px 44px;border-top:1px solid var(--border)}
+    .footer-dev{font-size:.7rem;color:#000;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+    .footer-ig{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:.82rem;font-weight:700;color:#000;text-decoration:none;transition:color .2s}
+    .footer-ig:hover{color:var(--rose)}
+    .footer-rights{margin-top:18px;font-size:.7rem;color:#000}
+
+    @media(max-width:400px){
+      .flavor-grid{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
+      .schedule-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
-
 <body>
 
-  <!-- STATUS BANNER -->
-  <div class="status-banner" id="statusBanner">
+  <div class="status-banner open" id="statusBanner">
     <div class="status-dot"></div>
-    <span id="statusText">Verificando horário...</span>
+    <span id="statusText">Bolos Caseiros da Fran</span>
   </div>
 
-  <!-- HERO -->
   <header class="hero">
-    <div class="hero-badge">🍰 Feito com amor</div>
+    <div class="hero-badge">&#127856; Feito com amor</div>
     <h1>Bolos <em>Caseiros</em><br>da Fran</h1>
-    <p class="hero-sub">Escolha seu sabor e faça seu pedido direto no WhatsApp</p>
+    <p class="hero-sub">Escolha seu sabor e fa&#231;a seu pedido direto no WhatsApp</p>
   </header>
 
-  <!-- AVISO 24H -->
   <div class="notice-24h">
     <div class="notice-24h-inner">
-      <span class="icon">⏰</span>
-      <span>Atenção: os pedidos devem ser feitos com <strong>no mínimo 24 horas de antecedência</strong>. Atendimento
-        das 9h às 18h.</span>
+      <span style="font-size:1.4rem;flex-shrink:0">&#9200;</span>
+      <span>Pedidos com <strong>no m&#237;nimo 24h de anteced&#234;ncia</strong>. Atendimento das 9h &#224;s 18h.</span>
     </div>
   </div>
 
-  <!-- FORMULÁRIO -->
   <div class="container">
 
-    <!-- 1: NOME -->
+    <!-- 1 -->
     <div class="step-card">
       <div class="step-header">
         <div class="step-badge">1</div>
         <div>
-          <div class="step-title">Qual é o seu nome?</div>
-          <div class="step-hint">Para personalizarmos seu pedido 🌸</div>
+          <div class="step-title">Qual &#233; o seu nome?</div>
+          <div class="step-hint">Para personalizarmos seu pedido &#127800;</div>
         </div>
       </div>
       <div class="name-wrap">
-        <span class="icon">👤</span>
-        <input type="text" id="nameInput" class="name-input" placeholder="Digite seu nome..." maxlength="60"
-          autocomplete="given-name">
+        <span class="icon">&#128100;</span>
+        <input type="text" id="nameInput" class="name-input" placeholder="Digite seu nome..." maxlength="60" autocomplete="given-name">
       </div>
     </div>
 
-    <!-- 2: SABOR -->
+    <!-- 2 -->
     <div class="step-card">
       <div class="step-header">
         <div class="step-badge">2</div>
         <div>
-          <div class="step-title">Escolha o Sabor</div>
-          <div class="step-hint">7 opções deliciosas esperando por você ✨</div>
+          <div class="step-title">Monte seu Bolo</div>
+          <div class="step-hint">Escolha sabor e tipo, depois adicione ao carrinho &#128722;</div>
         </div>
       </div>
+      <span class="section-label">Sabor</span>
       <div class="flavor-grid">
-        <div class="flavor-card" data-flavor="Laranja">
-          <div class="check">✓</div>
-          <span class="flavor-icon">🍊</span>
-          <span class="flavor-name">Laranja</span>
-        </div>
-        <div class="flavor-card" data-flavor="Chocolate">
-          <div class="check">✓</div>
-          <span class="flavor-icon">🍫</span>
-          <span class="flavor-name">Chocolate</span>
-        </div>
-        <div class="flavor-card" data-flavor="Maracujá">
-          <div class="check">✓</div>
-          <span class="flavor-icon">🍈</span>
-          <span class="flavor-name">Maracujá</span>
-        </div>
-        <div class="flavor-card" data-flavor="Fubá">
-          <div class="check">✓</div>
-          <span class="flavor-icon">🌽</span>
-          <span class="flavor-name">Fubá</span>
-        </div>
-        <div class="flavor-card" data-flavor="Coco">
-          <div class="check">✓</div>
-          <span class="flavor-icon">🥥</span>
-          <span class="flavor-name">Coco</span>
-        </div>
-        <div class="flavor-card" data-flavor="Iogurte">
-          <div class="check">✓</div>
-          <span class="flavor-icon">🫙</span>
-          <span class="flavor-name">Iogurte</span>
-        </div>
-        <div class="flavor-card" data-flavor="Cenoura">
-          <div class="check">✓</div>
-          <span class="flavor-icon">🥕</span>
-          <span class="flavor-name">Cenoura</span>
-        </div>
-        <div class="flavor-card" data-flavor="Banana com Aveia">
-          <div class="check">✓</div>
-          <span class="flavor-icon">🍌</span>
-          <span class="flavor-name">Banana c/ Aveia</span>
-        </div>
+        <div class="flavor-card" data-flavor="Laranja"><div class="check">&#10003;</div><span class="flavor-icon">&#127818;</span><span class="flavor-name">Laranja</span></div>
+        <div class="flavor-card" data-flavor="Chocolate"><div class="check">&#10003;</div><span class="flavor-icon">&#127851;</span><span class="flavor-name">Chocolate</span></div>
+        <div class="flavor-card" data-flavor="Maracuja"><div class="check">&#10003;</div><span class="flavor-icon">&#127816;</span><span class="flavor-name">Maracuj&#225;</span></div>
+        <div class="flavor-card" data-flavor="Fuba"><div class="check">&#10003;</div><span class="flavor-icon">&#127805;</span><span class="flavor-name">Fub&#225;</span></div>
+        <div class="flavor-card" data-flavor="Coco"><div class="check">&#10003;</div><span class="flavor-icon">&#129381;</span><span class="flavor-name">Coco</span></div>
+        <div class="flavor-card" data-flavor="Iogurte"><div class="check">&#10003;</div><span class="flavor-icon">🥛</span><span class="flavor-name">Iogurte</span></div>
+        <div class="flavor-card" data-flavor="Cenoura"><div class="check">&#10003;</div><span class="flavor-icon">&#129365;</span><span class="flavor-name">Cenoura</span></div>
+        <div class="flavor-card" data-flavor="Banana com Aveia"><div class="check">&#10003;</div><span class="flavor-icon">&#127820;</span><span class="flavor-name">Banana c/ Aveia</span></div>
       </div>
-    </div>
-
-    <!-- 3: TIPO -->
-    <div class="step-card">
-      <div class="step-header">
-        <div class="step-badge">3</div>
-        <div>
-          <div class="step-title">Tipo de Bolo</div>
-          <div class="step-hint">Simples ou com aquela calda especial? 🍯</div>
-        </div>
-      </div>
+      <div class="divider"></div>
+      <span class="section-label">Tipo</span>
       <div class="type-grid">
         <div class="type-card" data-type="Simples" data-price="18">
-          <div class="check">✓</div>
-          <span class="type-icon">🍰</span>
+          <div class="check">&#10003;</div>
+          <span class="type-icon">&#127856;</span>
           <div class="type-name">Simples</div>
           <div class="type-desc">Fofinho e gostoso do jeitinho caseiro</div>
           <div class="type-price">R$ 18,00</div>
         </div>
         <div class="type-card" data-type="Com Calda" data-price="25">
-          <div class="check">✓</div>
-          <span class="type-icon">🍯</span>
+          <div class="check">&#10003;</div>
+          <span class="type-icon">&#127855;</span>
           <div class="type-name">Com Calda</div>
-          <div class="type-desc">Com calda especial para um toque irresistível</div>
+          <div class="type-desc">Com calda especial para um toque irresist&#237;vel</div>
           <div class="type-price">R$ 25,00</div>
         </div>
       </div>
+      <button class="btn-add" onclick="addToCart()">&#128722; Adicionar ao Carrinho</button>
     </div>
 
-    <!-- 4: CONFIRMAR -->
+    <!-- 3 -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge">3</div>
+        <div>
+          <div class="step-title">Carrinho</div>
+          <div class="step-hint" id="cartHint">Nenhum item adicionado ainda</div>
+        </div>
+      </div>
+      <div id="cartContent">
+        <div class="cart-empty"><span class="cart-empty-icon">&#128722;</span>Adicione bolos usando o passo acima</div>
+      </div>
+    </div>
+
+    <!-- 4 -->
     <div class="step-card">
       <div class="step-header">
         <div class="step-badge">4</div>
         <div>
+          <div class="step-title">Retirada</div>
+          <div class="step-hint">Escolha a data de retirada &#128197;</div>
+        </div>
+      </div>
+      <div>
+          <label class="field-label" for="pickupDate">Data de Retirada</label>
+          <input type="date" id="pickupDate" class="field-input">
+        </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge">5</div>
+        <div>
+          <div class="step-title">Pagamento</div>
+          <div class="step-hint">Pagamento na retirada (PIX antecipado) &#128179;</div>
+        </div>
+      </div>
+      <div class="payment-grid">
+        <div class="payment-card" data-payment="Dinheiro"><div class="check">&#10003;</div><span class="payment-icon">&#128181;</span><div class="payment-name">Dinheiro</div></div>
+        <div class="payment-card" data-payment="PIX"><div class="check">&#10003;</div><span class="payment-icon">&#128242;</span><div class="payment-name">PIX</div></div>
+        <div class="payment-card" data-payment="Credito"><div class="check">&#10003;</div><span class="payment-icon">&#128179;</span><div class="payment-name">Cr&#233;dito</div></div>
+        <div class="payment-card" data-payment="Debito"><div class="check">&#10003;</div><span class="payment-icon">&#127968;</span><div class="payment-name">D&#233;bito</div></div>
+      </div>
+      <div class="pix-box" id="pixBox">
+        <h3>&#128242; Pague via PIX</h3>
+        <p>Escaneie o QR Code ou copie o c&#243;digo, pague e envie o comprovante no WhatsApp</p>
+        <div class="pix-amount" id="pixAmount">R$ 0,00</div>
+        <div id="qrcode-container"></div>
+        <div class="pix-key-box">
+          <div class="pix-key-label">Chave PIX (e-mail)</div>
+          franjurado36@gmail.com
+        </div>
+        <button class="btn-copy-pix" id="btnCopyPix" onclick="copyPixKey()">&#128203; Copiar c&#243;digo PIX</button>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-badge">6</div>
+        <div>
           <div class="step-title">Confirmar Pedido</div>
-          <div class="step-hint">Revise tudo e envie pelo WhatsApp 💬</div>
+          <div class="step-hint">Revise e envie pelo WhatsApp &#128172;</div>
         </div>
       </div>
-
       <div class="summary-box">
-        <div class="summary-title">✦ Resumo do Pedido</div>
-        <div class="summary-row">
-          <span class="label">Nome</span>
-          <span class="value" id="sumName">—</span>
-        </div>
-        <div class="summary-row">
-          <span class="label">Sabor</span>
-          <span class="value" id="sumFlavor">—</span>
-        </div>
-        <div class="summary-row">
-          <span class="label">Tipo</span>
-          <span class="value" id="sumType">—</span>
-        </div>
-        <div class="summary-total">
-          <span class="label">Total</span>
-          <span class="value" id="sumPrice">—</span>
-        </div>
+        <div class="summary-title">&#10022; Resumo do Pedido</div>
+        <div class="summary-row"><span class="label">Nome</span><span class="value" id="sumName">&#8212;</span></div>
+        <div id="sumItemsList"></div>
+        <div class="summary-row"><span class="label">Pagamento</span><span class="value" id="sumPayment">&#8212;</span></div>
+        <div class="summary-row"><span class="label">Retirada</span><span class="value" id="sumPickup">&#8212;</span></div>
+        <div class="summary-total"><span class="label">Total</span><span class="value" id="sumTotal">&#8212;</span></div>
       </div>
-
       <div class="closed-note" id="closedNote">
-        🌙 Estamos fora do horário de atendimento, mas seu pedido será enviado normalmente! Responderemos assim que
-        abrirmos às 9h.
+        &#127769; Estamos fora do hor&#225;rio agora, mas seu pedido ser&#225; enviado! Responderemos assim que abrirmos &#224;s 9h.
       </div>
-
       <div class="error-msg" id="errorMsg"></div>
-
       <button class="btn-whatsapp" onclick="sendOrder()">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Fazer Pedido pelo WhatsApp
       </button>
     </div>
 
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-dev">Desenvolvido por</div>
     <a href="https://www.instagram.com/crlstephany" target="_blank" class="footer-ig">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-        <path
-          d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-        </svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
       @crlstephany
     </a>
-    <div class="footer-rights">© 2026 Bolos Caseiros da Fran · Todos os direitos reservados</div>
+    <div class="footer-rights">&#169; 2026 Bolos Caseiros da Fran</div>
   </footer>
 
   <script>
-    // ── STATUS BANNER ──
-    function checkStatus() {
-      const now = new Date();
-      const h = now.getHours();
-      const isOpen = h >= 9 && h < 18;
-      const banner = document.getElementById('statusBanner');
-      const text = document.getElementById('statusText');
-      const closedNote = document.getElementById('closedNote');
+  document.addEventListener('DOMContentLoaded', function() {
 
-      if (isOpen) {
-        banner.className = 'status-banner open';
-        text.textContent = '🌸 Estamos abertos · 9h às 18h';
-        closedNote.classList.remove('show');
-      } else {
-        banner.className = 'status-banner closed';
-        text.textContent = '🌙 Estamos fechados · Abrimos às 9h';
-        closedNote.classList.add('show');
-      }
+    // STATUS
+    function checkStatus() {
+      var h = new Date().getHours();
+      var open = h >= 9 && h < 18;
+      var b = document.getElementById('statusBanner');
+      var t = document.getElementById('statusText');
+      var n = document.getElementById('closedNote');
+      b.className = 'status-banner ' + (open ? 'open' : 'closed');
+      t.textContent = open ? 'Estamos abertos - 9h as 18h' : 'Estamos fechados - Abrimos as 9h';
+      if (n) n.classList.toggle('show', !open);
     }
     checkStatus();
     setInterval(checkStatus, 60000);
 
-    // ── INTERACTIONS ──
-    let selectedFlavor = null,
-      selectedType = null,
-      selectedPrice = null;
+    // MIN DATE
+    var d = new Date(); d.setDate(d.getDate() + 1);
+    document.getElementById('pickupDate').min = d.toISOString().split('T')[0];
 
-    document.querySelectorAll('.flavor-card').forEach(card => {
-      card.addEventListener('click', () => {
-        document.querySelectorAll('.flavor-card').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        selectedFlavor = card.dataset.flavor;
-        updateSummary();
+    // STATE
+    var sFlavor = null, sType = null, sPrice = null, sPayment = null;
+    var cart = [], lastPix = '';
+
+    // FLAVOR CLICKS
+    document.querySelectorAll('.flavor-card').forEach(function(el) {
+      el.addEventListener('click', function() {
+        document.querySelectorAll('.flavor-card').forEach(function(x){ x.classList.remove('selected'); });
+        el.classList.add('selected');
+        sFlavor = el.dataset.flavor;
       });
     });
 
-    document.querySelectorAll('.type-card').forEach(card => {
-      card.addEventListener('click', () => {
-        document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        selectedType = card.dataset.type;
-        selectedPrice = parseInt(card.dataset.price);
+    // TYPE CLICKS
+    document.querySelectorAll('.type-card').forEach(function(el) {
+      el.addEventListener('click', function() {
+        document.querySelectorAll('.type-card').forEach(function(x){ x.classList.remove('selected'); });
+        el.classList.add('selected');
+        sType = el.dataset.type;
+        sPrice = parseInt(el.dataset.price);
+      });
+    });
+
+    // PAYMENT CLICKS
+    document.querySelectorAll('.payment-card').forEach(function(el) {
+      el.addEventListener('click', function() {
+        document.querySelectorAll('.payment-card').forEach(function(x){ x.classList.remove('selected'); });
+        el.classList.add('selected');
+        sPayment = el.dataset.payment;
+        var pb = document.getElementById('pixBox');
+        if (sPayment === 'PIX') { pb.classList.add('show'); genPix(); }
+        else { pb.classList.remove('show'); }
         updateSummary();
       });
     });
 
     document.getElementById('nameInput').addEventListener('input', updateSummary);
+    document.getElementById('pickupDate').addEventListener('change', updateSummary);
 
-    function updateSummary() {
-      const name = document.getElementById('nameInput').value.trim();
-      document.getElementById('sumName').textContent = name || '—';
-      document.getElementById('sumFlavor').textContent = selectedFlavor || '—';
-      document.getElementById('sumType').textContent = selectedType || '—';
-      document.getElementById('sumPrice').textContent = selectedPrice ? `R$ ${selectedPrice},00` : '—';
-    }
 
-    function sendOrder() {
-      document.getElementById('errorMsg').classList.remove('show');
-      const name = document.getElementById('nameInput').value.trim();
 
-      if (!name) {
-        showError('Por favor, informe seu nome para o pedido. 😊');
-        return;
+    // ADD TO CART
+    window.addToCart = function() {
+      clearErr();
+      if (!sFlavor) { showErr('Escolha um sabor antes de adicionar.'); return; }
+      if (!sType)   { showErr('Escolha o tipo: Simples ou Com Calda.'); return; }
+      var em = {'Laranja':'&#127818;','Chocolate':'&#127851;','Maracuja':'&#127816;',
+        'Fuba':'&#127805;','Coco':'&#129381;','Iogurte':'🥛',
+        'Cenoura':'&#129365;','Banana com Aveia':'&#127820;'};
+      cart.push({ id: Date.now(), flavor: sFlavor, type: sType, price: sPrice, emoji: em[sFlavor] || '&#127874;' });
+      renderCart(); updateSummary();
+      if (sPayment === 'PIX') genPix();
+      document.querySelectorAll('.flavor-card').forEach(function(x){ x.classList.remove('selected'); });
+      document.querySelectorAll('.type-card').forEach(function(x){ x.classList.remove('selected'); });
+      sFlavor = null; sType = null; sPrice = null;
+    };
+
+    // RENDER CART
+    function renderCart() {
+      var c = document.getElementById('cartContent');
+      var h = document.getElementById('cartHint');
+      if (cart.length === 0) {
+        c.innerHTML = '<div class="cart-empty"><span class="cart-empty-icon">&#128722;</span>Adicione bolos usando o passo acima</div>';
+        h.textContent = 'Nenhum item adicionado ainda'; return;
       }
-      if (!selectedFlavor) {
-        showError('Por favor, escolha o sabor do bolo. 🍰');
-        return;
-      }
-      if (!selectedType) {
-        showError('Por favor, escolha o tipo: Simples ou com Calda. 🍯');
-        return;
-      }
-
-      const typeEmoji = selectedType === 'Simples' ? '🍰' : '🍯';
-      const flavorEmoji = {
-        'Laranja': '🍊',
-        'Chocolate': '🍫',
-        'Maracujá': '🍈',
-        'Fubá': '🌽',
-        'Coco': '🥥',
-        'Iogurte': '🫙',
-        'Cenoura': '🥕'
-      } [selectedFlavor] || '🎂';
-
-      const now = new Date();
-      const h = now.getHours();
-      const isOpen = h >= 9 && h < 18;
-      const statusLine = isOpen ?
-        '🟢 Pedido realizado dentro do horário de atendimento' :
-        '🌙 Pedido realizado fora do horário — responderemos assim que abrirmos!';
-
-      const msg =
-        `🎂✨ *NOVO PEDIDO — Bolos Caseiros da Fran* ✨🎂
-
-Olá, Fran! Vim pelo site fazer meu pedido 🥰
-
-━━━━━━━━━━━━━━━━━━━━
-👤 *Nome:* ${name}
-${flavorEmoji} *Sabor:* ${selectedFlavor}
-${typeEmoji} *Tipo:* Bolo ${selectedType}
-💰 *Valor:* R$ ${selectedPrice},00
-━━━━━━━━━━━━━━━━━━━━
-⏰ *Lembrando:* pedido com 24h de antecedência
-${statusLine}
-━━━━━━━━━━━━━━━━━━━━
-
-Aguardo confirmação, obrigada! 🙏💛`;
-
-      window.open(`https://wa.me/5511932578086?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    function showError(msg) {
-      const el = document.getElementById('errorMsg');
-      el.textContent = msg;
-      el.classList.add('show');
-      el.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
+      var tot = cart.reduce(function(s,i){ return s+i.price; },0);
+      h.textContent = cart.length + ' item' + (cart.length>1?'s':'') + ' - R$ ' + tot + ',00';
+      var html = '';
+      cart.forEach(function(it) {
+        html += '<div class="cart-item">'
+          +'<span class="cart-item-emoji">'+it.emoji+'</span>'
+          +'<div class="cart-item-info"><div class="cart-item-name">Bolo de '+it.flavor+'</div>'
+          +'<div class="cart-item-sub">'+it.type+'</div></div>'
+          +'<span class="cart-item-price">R$ '+it.price+',00</span>'
+          +'<button class="cart-item-remove" onclick="removeItem('+it.id+')">&#10005;</button></div>';
       });
+      html += '<div class="cart-total-row"><span class="cart-total-label">Total</span>'
+             +'<span class="cart-total-value">R$ '+tot+',00</span></div>';
+      c.innerHTML = html;
     }
 
-    // ── PWA SERVICE WORKER ──
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').catch(console.error);
+    window.removeItem = function(id) {
+      cart = cart.filter(function(i){ return i.id !== id; });
+      renderCart(); updateSummary();
+      if (sPayment === 'PIX') genPix();
+    };
+
+    // UPDATE SUMMARY
+    function updateSummary() {
+      var name = document.getElementById('nameInput').value.trim();
+      var date = document.getElementById('pickupDate').value;
+      var tot = cart.reduce(function(s,i){ return s+i.price; },0);
+      document.getElementById('sumName').textContent = name || '-';
+      document.getElementById('sumPayment').textContent = sPayment || '-';
+      var ps = '-';
+      if (date) { var dp=date.split('-'); ps=dp[2]+'/'+dp[1]+'/'+dp[0]; }
+      document.getElementById('sumPickup').textContent = ps;
+      var listEl = document.getElementById('sumItemsList');
+      if (cart.length === 0) {
+        listEl.innerHTML = '<div style="font-size:.82rem;color:var(--text3);padding:5px 0">Nenhum item no carrinho</div>';
+      } else {
+        listEl.innerHTML = cart.map(function(i){
+          return '<div class="summary-item-row"><span class="s-name">'+i.emoji+' Bolo de '+i.flavor+' ('+i.type+')</span><span class="s-price">R$ '+i.price+',00</span></div>';
+        }).join('');
+      }
+      document.getElementById('sumTotal').textContent = tot > 0 ? 'R$ '+tot+',00' : '-';
     }
+
+    // GENERATE PIX
+    function genPix() {
+      var tot = cart.reduce(function(s,i){ return s+i.price; },0);
+      document.getElementById('pixAmount').textContent = 'R$ '+tot+',00';
+      if (tot === 0) return;
+      function pad(id,v){ return id+v.length.toString().padStart(2,'0')+v; }
+      function crc(s){
+        var c=0xFFFF;
+        for(var i=0;i<s.length;i++){c^=s.charCodeAt(i)<<8;for(var j=0;j<8;j++){c=(c&0x8000)?((c<<1)^0x1021):(c<<1);c&=0xFFFF;}}
+        return c.toString(16).toUpperCase().padStart(4,'0');
+      }
+      var k='franjurado36@gmail.com', n='Bolos da Fran', ci='SAO PAULO', am=tot.toFixed(2);
+      // Field 26: Merchant Account Info (PIX BACEN spec)
+      var f26body = pad('00','BR.GOV.BCB.PIX') + pad('01',k);
+      var f26 = pad('26', f26body);
+      // Field 54: transaction amount
+      var f54 = pad('54', am);
+      // Field 59: merchant name (max 25 chars, ASCII only)
+      var safeName = n.substring(0,25);
+      // Field 60: city (max 15 chars, ASCII only)
+      var safeCity = ci.substring(0,15);
+      var pl = '000201' + f26 + '52040000' + '5303986' + f54 + '5802BR' + pad('59',safeName) + pad('60',safeCity) + '62070503***' + '6304';
+      pl = pl.replace('6304', '') + '6304';
+      pl += crc(pl);
+      lastPix = pl;
+      var cont=document.getElementById('qrcode-container'); cont.innerHTML='';
+      if(typeof QRCode!=='undefined') new QRCode(cont,{text:pl,width:180,height:180,correctLevel:QRCode.CorrectLevel.M});
+    }
+
+    // COPY PIX
+    window.copyPixKey = function() {
+      var text = lastPix || 'franjurado36@gmail.com';
+      var btn = document.getElementById('btnCopyPix');
+      function done(){ btn.textContent='Copiado!'; btn.classList.add('copied'); setTimeout(function(){ btn.textContent='&#128203; Copiar codigo PIX'; btn.classList.remove('copied'); },3000); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function(){ fb(text); done(); });
+      } else { fb(text); done(); }
+    };
+    function fb(t){ var a=document.createElement('textarea'); a.value=t; a.style.cssText='position:fixed;opacity:0'; document.body.appendChild(a); a.focus(); a.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(a); }
+
+    // SEND
+    window.sendOrder = function() {
+      clearErr();
+      var name=document.getElementById('nameInput').value.trim();
+      var date=document.getElementById('pickupDate').value;
+      if (!name){ showErr('Informe seu nome.'); return; }
+      if (cart.length===0){ showErr('Adicione pelo menos um bolo ao carrinho.'); return; }
+      if (!sPayment){ showErr('Escolha a forma de pagamento.'); return; }
+      if (!date){ showErr('Informe a data de retirada.'); return; }
+      var tot=cart.reduce(function(s,i){return s+i.price;},0);
+      var dp=date.split('-'), pk=dp[2]+'/'+dp[1]+'/'+dp[0];
+      var its=cart.map(function(i){return '  * Bolo de '+i.flavor+' ('+i.type+') - R$ '+i.price+',00';}).join('\n');
+      var pn=sPayment==='PIX'?'\n\nPagamento via PIX - o comprovante sera enviado em seguida!':'';
+      var msg='Ola, Fran!\n\nNome: '+name+'\n\nItens:\n'+its+'\n\nTotal: R$ '+tot+',00\nPagamento: '+sPayment+'\nRetirada: '+pk+pn+'\n\nAguardo confirmacao!';
+      window.open('https://wa.me/5511932578086?text='+encodeURIComponent(msg),'_blank');
+    };
+
+    function showErr(m){ var e=document.getElementById('errorMsg'); e.textContent=m; e.classList.add('show'); e.scrollIntoView({behavior:'smooth',block:'center'}); }
+    function clearErr(){ document.getElementById('errorMsg').classList.remove('show'); }
+
+    updateSummary();
+  });
   </script>
 </body>
-
 </html>
