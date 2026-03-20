@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#D4756B">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Bolos da Fran">
   <title>Bolos Caseiros da Fran</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -280,7 +285,7 @@
         <div id="qrcode-container"></div>
         <div class="pix-key-box">
           <div class="pix-key-label">Chave PIX (e-mail)</div>
-          franjurado36@gmail.com
+          <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0d6b7f6c6367787f6c69623e3b4d6a606c6461236e6260">[email&#160;protected]</a>
         </div>
         <button class="btn-copy-pix" id="btnCopyPix" onclick="copyPixKey()">&#128203; Copiar c&#243;digo PIX</button>
       </div>
@@ -324,7 +329,7 @@
     <div class="footer-rights">&#169; 2026 Bolos Caseiros da Fran</div>
   </footer>
 
-  <script>
+<script>
   document.addEventListener('DOMContentLoaded', function() {
 
     // STATUS
@@ -522,10 +527,17 @@
  
 
     function showErr(m){ var e=document.getElementById('errorMsg'); e.textContent=m; e.classList.add('show'); e.scrollIntoView({behavior:'smooth',block:'center'}); }
-    function clearErr(){ document.getElementById('errorMsg').classList.remove('show'); }
+    function clearErr(){ var e=document.getElementById('errorMsg'); e.classList.remove('show'); }
 
-    updateSummary();
-  });
+    // REGISTER SERVICE WORKER (PWA)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js')
+          .then(function(reg){ console.log('SW registrado:', reg.scope); })
+          .catch(function(err){ console.warn('SW falhou:', err); });
+      });
+    }
+});
   </script>
 </body>
 </html>
